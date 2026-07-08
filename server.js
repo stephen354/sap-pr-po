@@ -1,6 +1,8 @@
 /**
- * Local dev server with proxy to SAP endpoint.
- * Serves static files and forwards /api/create-pr to the SAP server.
+ * Local dev server with proxy to SAP endpoints.
+ * Serves static files and forwards:
+ *   /api/create-pr → SAP CREATE_PR
+ *   /api/create-po → SAP CREATE_PO
  *
  * Usage: node server.js
  * Then open http://localhost:3001
@@ -13,7 +15,11 @@ const path = require('path');
 const PORT = 3001;
 const SAP_HOST = '45.127.134.174';
 const SAP_PORT = 8000;
-const SAP_PATH = '/bootcamp/STEV_TEST/CREATE_PR';
+
+const SAP_ENDPOINTS = {
+  '/api/create-pr': '/bootcamp/STEV_TEST/CREATE_PR',
+  '/api/create-po': '/bootcamp/STEV_TEST/CREATE_PO',
+};
 
 const MIME = {
   '.html': 'text/html',
@@ -25,8 +31,9 @@ const MIME = {
 };
 
 const server = http.createServer((req, res) => {
-  // --- Proxy route ---
-  if (req.method === 'POST' && req.url === '/api/create-pr') {
+  // --- Proxy routes ---
+  if (req.method === 'POST' && SAP_ENDPOINTS[req.url]) {
+    const sapPath = SAP_ENDPOINTS[req.url];
     let body = '';
     req.on('data', chunk => { body += chunk; });
     req.on('end', () => {
@@ -42,11 +49,12 @@ const server = http.createServer((req, res) => {
       const options = {
         hostname: SAP_HOST,
         port: SAP_PORT,
-        path: SAP_PATH,
+        path: sapPath,
         method: 'POST',
         headers: headers,
       };
 
+      console.log(`[PROXY] ${req.url} → ${sapPath}`);
       console.log('[PROXY] Body →', JSON.stringify(body));
 
       const proxy = http.request(options, (sapRes) => {
@@ -99,6 +107,6 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`\n  SAP PR Creator — dev server`);
+  console.log(`\n  SAP PR / PO Creator — dev server`);
   console.log(`  http://localhost:${PORT}\n`);
 });

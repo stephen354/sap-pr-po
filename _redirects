@@ -1,1 +1,2 @@
 /api/create-pr  http://45.127.134.174:8000/bootcamp/STEV_TEST/CREATE_PR  200
+/api/create-po  http://45.127.134.174:8000/bootcamp/STEV_TEST/CREATE_PO  200
