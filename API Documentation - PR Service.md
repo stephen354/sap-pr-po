@@ -1,36 +1,16 @@
-# SAP API Documentation
-
-| Field | Value |
-| :--- | :--- |
-| **API Title** | Create Purchase Requisition (PR Service) |
-| **Client** | PT Indonesia Comnets Plus |
-| **Consultant** | CV Difo Lestari |
-| **SAP Version** | ECC < 7.4 |
-| **SAP Module** | Logistic (MM) |
-| **Functional** | Wisnu Wibisana |
-| **ABAP** | Stephen (STEV_TEST) |
-
-## Document History
-
-| Version No. | Release Date | Author | Remarks |
-| :--- | :--- | :--- | :--- |
-| 0.1 | 08/07/2026 | Stephen | Initial Version |
-
----
-
-# Create Purchase Requisition (PR Service)
+# SAP API Specification: Create Purchase Requisition (PR Service)
 
 Dokumentasi API untuk pembuatan **Purchase Requisition (PR)** di SAP ECC menggunakan BAPI `BAPI_PR_CREATE`.
 
 ## 1. Informasi Umum API
 
-| Parameter | Keterangan |
-| :--- | :--- |
-| **HTTP Method** | POST |
-| **URL Endpoint** | `http://45.127.134.174:8000/bootcamp/STEV_TEST/CREATE_PR` |
-| **Content-Type** | `text/plain` |
-| **Authentication** | Basic Authentication (SAP Username & Password) |
-| **HTTP Handler Class** | `ZCL_STEV_TEST_PR` (atau handler BAPI PR terkait) |
+| Parameter              | Keterangan                                                |
+| :--------------------- | :-------------------------------------------------------- |
+| **HTTP Method**        | POST                                                      |
+| **URL Endpoint**       | `http://45.127.134.174:8000/bootcamp/STEV_TEST/CREATE_PR` |
+| **Content-Type**       | `text/plain`                                              |
+| **Authentication**     | Basic Authentication (SAP Username & Password)            |
+| **HTTP Handler Class** | `ZCL_STEV_TEST_PR` (atau handler BAPI PR terkait)         |
 
 ---
 
@@ -39,11 +19,13 @@ Dokumentasi API untuk pembuatan **Purchase Requisition (PR)** di SAP ECC menggun
 Request body dikirim berupa plain text dengan separator karakter `#`, `|`, dan `;`.
 
 #### Format:
+
 ```text
 <DOC_TYPE>#<MATERIAL_1>|<QTY_1>|<PLANT_1>;<MATERIAL_2>|<QTY_2>|<PLANT_2>;...
 ```
 
 #### Contoh Payload:
+
 ```text
 NB#STEPHEN|10|3000;STEPHEN|5|3000
 ```
@@ -54,17 +36,17 @@ NB#STEPHEN|10|3000;STEPHEN|5|3000
 
 ### A. Parameter Header
 
-| Field Name | Tipe Data | Panjang | Keterangan | Contoh |
-| :--- | :--- | :---: | :--- | :--- |
-| `DOC_TYPE` | CHAR | 4 | Purchase Requisition Document Type (Mandatory) | `NB` |
+| Field Name | Tipe Data | Panjang | Keterangan                                     | Contoh |
+| :--------- | :-------- | :-----: | :--------------------------------------------- | :----- |
+| `DOC_TYPE` | CHAR      |    4    | Purchase Requisition Document Type (Mandatory) | `NB`   |
 
 ### B. Parameter Items (Dipisahkan oleh `;`)
 
-| Field Name | Tipe Data | Panjang | Keterangan | Contoh |
-| :--- | :--- | :---: | :--- | :--- |
-| `MATERIAL` | CHAR | 18 | Kode Material SAP (akan otomatis di-convert ke UPPERCASE) | `STEPHEN` |
-| `QUANTITY` | QUAN | 13 | Jumlah barang yang diminta | `10` |
-| `PLANT` | CHAR | 4 | Plant code penerima barang | `3000` |
+| Field Name | Tipe Data | Panjang | Keterangan                                                | Contoh    |
+| :--------- | :-------- | :-----: | :-------------------------------------------------------- | :-------- |
+| `MATERIAL` | CHAR      |   18    | Kode Material SAP (akan otomatis di-convert ke UPPERCASE) | `STEPHEN` |
+| `QUANTITY` | QUAN      |   13    | Jumlah barang yang diminta                                | `10`      |
+| `PLANT`    | CHAR      |    4    | Plant code penerima barang                                | `3000`    |
 
 ---
 
@@ -73,7 +55,9 @@ NB#STEPHEN|10|3000;STEPHEN|5|3000
 API akan mengembalikan respon text/plain tergantung hasil eksekusi BAPI.
 
 ### A. Response Sukses
+
 Ketika PR berhasil dibuat dan di-commit di SAP.
+
 - **HTTP Status:** `200 OK`
 - **Format Response:**
   ```text
@@ -82,7 +66,9 @@ Ketika PR berhasil dibuat dan di-commit di SAP.
 - **Contoh:** `Sukses! Nomor PR berhasil dibuat: 0010013924`
 
 ### B. Response Error / Gagal
+
 Jika validasi BAPI gagal (misal material tidak valid, plant tidak ada, atau otorisasi kurang). Transaksi otomatis di-rollback.
+
 - **HTTP Status:** `200 OK` (atau error response dari server web jika terjadi network error)
 - **Format Response:**
   ```text
