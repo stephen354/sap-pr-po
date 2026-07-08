@@ -1,4 +1,24 @@
-# SAP API Specification: Create Purchase Order (PO Service)
+# SAP API Documentation
+
+| Field | Value |
+| :--- | :--- |
+| **API Title** | Create and Release Purchase Order (Adopt PR and Direct Input) (PO Service) |
+| **Client** | PT Indonesia Comnets Plus |
+| **Consultant** | CV Difo Lestari |
+| **SAP Version** | ECC < 7.4 |
+| **SAP Module** | Logistic (MM) |
+| **Functional** | Wisnu Wibisana |
+| **ABAP** | Stephen (STEV_TEST) |
+
+## Document History
+
+| Version No. | Release Date | Author | Remarks |
+| :--- | :--- | :--- | :--- |
+| 0.1 | 08/07/2026 | Stephen | Initial Version |
+
+---
+
+# Create Purchase Order (Adopt PR and Direct Input) (PO Service)
 
 Dokumentasi API untuk pembuatan **Purchase Order (PO)** di SAP ECC menggunakan BAPI `BAPI_PO_CREATE1`. Layanan ini mendukung dua jenis skenario pembuatan PO: dengan referensi **Purchase Requisition (PR)** (Adopt PR) dan **Direct PO** (tanpa PR).
 

@@ -1,4 +1,24 @@
-# SAP API Specification: Create Purchase Requisition (PR Service)
+# SAP API Documentation
+
+| Field | Value |
+| :--- | :--- |
+| **API Title** | Create Purchase Requisition (PR Service) |
+| **Client** | PT Indonesia Comnets Plus |
+| **Consultant** | CV Difo Lestari |
+| **SAP Version** | ECC < 7.4 |
+| **SAP Module** | Logistic (MM) |
+| **Functional** | Wisnu Wibisana |
+| **ABAP** | Stephen (STEV_TEST) |
+
+## Document History
+
+| Version No. | Release Date | Author | Remarks |
+| :--- | :--- | :--- | :--- |
+| 0.1 | 08/07/2026 | Stephen | Initial Version |
+
+---
+
+# Create Purchase Requisition (PR Service)
 
 Dokumentasi API untuk pembuatan **Purchase Requisition (PR)** di SAP ECC menggunakan BAPI `BAPI_PR_CREATE`.
 
